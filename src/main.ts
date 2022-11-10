@@ -7,4 +7,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   id="canvas"
 ></canvas>
 `
-await setup(document.querySelector('#canvas') as HTMLCanvasElement)
+setup(document.querySelector('#canvas') as HTMLCanvasElement)
