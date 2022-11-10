@@ -1,4 +1,4 @@
-const obstaculo = '#B3B3B3'
+const obstaculo = '#909090'
 const libre = '#e5e5e5'
 const openset = '#31cb6c'
 const closedset = '#B6356D'
