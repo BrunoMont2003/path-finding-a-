@@ -3,7 +3,7 @@ export const createRestartButton = async () => {
   console.log(container)
   const button = document.createElement('button')
   button.id = 'restart'
-  button.innerText = 'Restart'
+  button.innerText = 'Reiniciar'
   button.classList.add('btn')
   button.classList.add('btnRestart')
   container.appendChild(button)
