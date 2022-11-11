@@ -1,6 +1,6 @@
 import './style.css'
 import { begin } from './astar'
-
+import flag from './img/flag.png'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <h1>Path Finding with A* algorithm!</h1>
   <div class="container" id='container' >
@@ -10,7 +10,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button class='btn btnStart' id="btnStart">
       Start
     </button>
-    <img src="https://www.pngplay.com/wp-content/uploads/10/Red-Square-Flag-PNG-Clipart-Background.png" class="red-flag">
+    <img src=${flag} class="red-flag">
   </div>
 `
 begin(
