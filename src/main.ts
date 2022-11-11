@@ -1,10 +1,18 @@
 import './style.css'
-import { setup } from './astar'
+import { begin } from './astar'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <h1>Path Finding with A* algorithm!</h1>
-  <canvas 
-  id="canvas"
-></canvas>
+  <div class="container" id='container' >
+    <canvas 
+    id="canvas"
+    ></canvas>
+    <button class='btn btnStart' id="btnStart">
+      Start
+    </button>
+  </div>
 `
-setup(document.querySelector('#canvas') as HTMLCanvasElement)
+begin(
+  document.querySelector('#canvas') as HTMLCanvasElement,
+  document.querySelector('#btnStart') as HTMLButtonElement
+)

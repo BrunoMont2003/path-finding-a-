@@ -3,6 +3,12 @@ import Ruta from './classes/Ruta'
 import heuristica from './helpers/heuristica'
 import logger from './helpers/logger'
 import { createRestartButton } from './helpers/restart'
+import { crearEscenarioAleatorio } from './helpers/crearEscenario'
+import {
+  dibujarEscenarioConCamino,
+  dibujarEscenarioSinCamino
+} from './helpers/dibujarEscenario'
+import borrarCanvas from './helpers/borrarCanvas'
 
 const columnas: number = 20
 const filas: number = 20
@@ -10,51 +16,6 @@ const FPS: number = 500
 let terminado: boolean = false
 var sigue: boolean = true
 const parent = document.getElementById('app') as HTMLDivElement
-
-// creamos un array 2D
-const createArray2D = (filas: number, columnas: number): any[] => {
-  const array: any = []
-  for (let i = 0; i < filas; i++) {
-    array.push([])
-    for (let j = 0; j < columnas; j++) {
-      array[i].push([])
-    }
-  }
-  return array
-}
-
-const borrarCanvas = (canvas: HTMLCanvasElement) => {
-  const context = canvas.getContext('2d')!
-  context.clearRect(0, 0, canvas.width, canvas.height)
-}
-
-const dibujarEscenario = (
-  escenario: Casilla[][],
-  filas: number,
-  columnas: number,
-  context: CanvasRenderingContext2D,
-  tileWidth: number,
-  tileHeight: number,
-  ruta: Ruta
-) => {
-  for (let i = 0; i < filas; i++) {
-    for (let j = 0; j < columnas; j++) {
-      escenario[i][j].dibujar(context, tileWidth, tileHeight)
-    }
-  }
-  for (let i = 0; i < ruta.openset.length; i++) {
-    const element = ruta.openset[i]
-    element.dibujarOS(context, tileWidth, tileHeight)
-  }
-  for (let i = 0; i < ruta.closedSet.length; i++) {
-    const element = ruta.closedSet[i]
-    element.dibujarCS(context, tileWidth, tileHeight)
-  }
-  for (let i = 0; i < ruta.camino.length; i++) {
-    const element = ruta.camino[i]
-    element.dibujarCamino(context, tileWidth, tileHeight)
-  }
-}
 
 const astar = (ruta: Ruta) => {
   // seguimos hasta encontrar la solución
@@ -85,7 +46,7 @@ const astar = (ruta: Ruta) => {
         }
         console.log('Camino Encontrado!')
         logger(parent, 'Camino Encontrado!', true)
-        createRestartButton(parent)
+        setTimeout(() => createRestartButton(), 1000)
         terminado = true
       }
       // si no, seguimos
@@ -128,60 +89,49 @@ const astar = (ruta: Ruta) => {
   } else {
     console.log('No hay camino posible')
     logger(parent, 'No hay camino posible', false)
-    createRestartButton(parent)
+    createRestartButton()
     terminado = true
   }
 }
 
-export const setup = async (canvas: HTMLCanvasElement) => {
-  const context = canvas.getContext('2d')!
-  // calculamos el tamaño de los tiles proporcionalmente
-  const tileWidth = canvas.width / columnas
-  const tileHeight = canvas.height / filas
-
-  // creamos la matriz
-  const escenario = createArray2D(filas, columnas)
-
-  // añadimos casillas al escenario
-  for (let i = 0; i < filas; i++) {
-    for (let j = 0; j < columnas; j++) {
-      escenario[i][j] = new Casilla(i, j)
-    }
-  }
-
-  // añadimos los vecinos a cada casilla
-  for (let i = 0; i < filas; i++) {
-    for (let j = 0; j < columnas; j++) {
-      escenario[i][j].setVecinos(escenario)
-    }
-  }
-
+const generarRuta = (escenario: Casilla[][]) => {
   // generamos ruta
   const ruta = new Ruta(escenario[0][0], escenario[filas - 1][columnas - 1])
-
   // si el origen y el destino son iguales, son casillas de tipo obstáculo
   if (ruta.origen === ruta.destino) {
     terminado = true
     console.log('No hay camino posible')
     logger(parent, 'No hay camino posible', false)
-    createRestartButton(parent)
+    createRestartButton()
   }
+  return ruta
+}
 
-  //   ejecutamos el bucle principal
+const buclePrincipal = async (
+  escenario: Casilla[][],
+  canvas: HTMLCanvasElement,
+  ruta: Ruta
+) => {
   while (!terminado) {
     borrarCanvas(canvas)
     astar(ruta)
-    //console.log(finalizado)
-    dibujarEscenario(
-      escenario,
-      filas,
-      columnas,
-      context,
-      tileWidth,
-      tileHeight,
-      ruta
-    )
+    dibujarEscenarioConCamino(escenario, canvas, ruta)
     // sleep 5 seconds
     await new Promise((r) => setTimeout(r, 5000 / FPS))
   }
+}
+
+export const begin = async (
+  canvas: HTMLCanvasElement,
+  btnStart: HTMLButtonElement
+) => {
+  const escenario = crearEscenarioAleatorio(filas, columnas)
+  dibujarEscenarioSinCamino(escenario, canvas)
+  btnStart.addEventListener('click', async () => {
+    btnStart.classList.add('hidden')
+    //generamos ruta
+    const ruta = generarRuta(escenario)
+    // ejecutamos el bucle principal
+    buclePrincipal(escenario, canvas, ruta)
+  })
 }

@@ -22,8 +22,42 @@ h1{
   min-height: 100vh;
   padding: 2rem 0;
 }
+.container{
+  position: relative;
+}
+.btn{
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  background-color: #242424;
+  color: #fff;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btnStart{
+  background-color: #1c69e4;
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  left: 0;
+}
+.btnStart:hover{
+  color: #fff;
+  background-color: #5c94ed;
+}
 
-#canvas{
+.btnRestart{
+  background-color: #37d437;
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  left: 0;
+}
+.hidden{
+  display: none;
+}
+canvas{
   display: block;
   margin: 0 auto;
   border-radius: .5rem;
@@ -47,14 +81,4 @@ h1{
 
 .logger__message--error{
   color: #ff0000;
-}
-#restart{
-  background-color: #00ff00;
-  color: #242424;
-  border: none;
-  border-radius: .5rem;
-  padding: .5rem 1rem;
-  font-size: 1.5rem;
-  margin: 1rem 0;
-  cursor: pointer;    
 }
