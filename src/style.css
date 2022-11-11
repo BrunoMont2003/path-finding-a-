@@ -19,8 +19,13 @@ h1{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+<<<<<<< HEAD
   min-height: 100vh;
   padding: 1rem 0;
+=======
+  min-height: calc(100vh - 50px);
+  padding: 2rem 0;
+>>>>>>> master
 }
 .container{
   position: relative;
@@ -92,13 +97,16 @@ canvas{
   right: 0px;
 }
 footer {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   text-align: center;
   color: #fff;
   font-size: .8rem;
   padding: 1rem 0;
+  background-color: #363535;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 footer a {
   color: rgb(248, 255, 172);
