@@ -12,7 +12,7 @@ import borrarCanvas from './helpers/borrarCanvas'
 
 const columnas: number = 20
 const filas: number = 20
-const FPS: number = 500
+const FPS: number = 300
 let terminado: boolean = false
 var sigue: boolean = true
 const parent = document.getElementById('app') as HTMLDivElement
