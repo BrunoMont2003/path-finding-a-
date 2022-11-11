@@ -24,6 +24,7 @@ h1{
 }
 .container{
   position: relative;
+  display: flex;
 }
 .btn{
   display: block;
@@ -81,4 +82,12 @@ canvas{
 
 .logger__message--error{
   color: #ff0000;
+}
+
+.red-flag{
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  align-self: flex-end;
+  right: 0px;
 }

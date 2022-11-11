@@ -10,6 +10,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button class='btn btnStart' id="btnStart">
       Start
     </button>
+    <img src="https://www.pngplay.com/wp-content/uploads/10/Red-Square-Flag-PNG-Clipart-Background.png" class="red-flag">
   </div>
 `
 begin(
