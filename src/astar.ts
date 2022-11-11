@@ -5,8 +5,9 @@ import logger from './helpers/logger'
 
 const columnas: number = 20
 const filas: number = 20
-const FPS: number = 50
+const FPS: number = 500
 let terminado: boolean = false
+var sigue: boolean = true
 const parent = document.getElementById(
   'app'
 ) as HTMLDivElement
@@ -56,9 +57,13 @@ const dibujarEscenario = (
   }
 }
 
+
+
 const astar = (ruta: Ruta) => {
   // seguimos hasta encontrar la solución
-  if (!terminado) {
+  if (!terminado && sigue) {
+    //Sigue se convierte falso. Si realmente sigue, se vuelve true
+    sigue = false
     // seguimos si hay algo en openset
     if (ruta.openset.length > 0) {
       let ganador = 0 // indice del mejor candidato
@@ -87,6 +92,7 @@ const astar = (ruta: Ruta) => {
       }
       // si no, seguimos
       else {
+        sigue = true
         // borramos la casilla ganadora de openset
         ruta.openset.splice(ganador, 1)
         // la añadimos a closedset
@@ -160,11 +166,12 @@ export const setup = async (canvas: HTMLCanvasElement) => {
     console.log('No hay camino posible')
     logger(parent, 'No hay camino posible', false)
   }
-
+  
   //   ejecutamos el bucle principal
   while (!terminado) {
     borrarCanvas(canvas)
     astar(ruta)
+    //console.log(finalizado)
     dibujarEscenario(
       escenario,
       filas,
