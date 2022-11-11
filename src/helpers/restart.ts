@@ -6,8 +6,8 @@ export const createRestartButton = async () => {
   button.innerText = 'Restart'
   button.classList.add('btn')
   button.classList.add('btnRestart')
+  container.appendChild(button)
   button.addEventListener('click', () => {
     window.location.reload()
   })
-  container.appendChild(button)
 }
