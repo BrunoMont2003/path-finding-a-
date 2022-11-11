@@ -19,13 +19,8 @@ h1{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-<<<<<<< HEAD
-  min-height: 100vh;
-  padding: 1rem 0;
-=======
   min-height: calc(100vh - 50px);
   padding: 2rem 0;
->>>>>>> master
 }
 .container{
   position: relative;
