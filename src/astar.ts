@@ -2,15 +2,14 @@ import Casilla from './classes/Casilla'
 import Ruta from './classes/Ruta'
 import heuristica from './helpers/heuristica'
 import logger from './helpers/logger'
+import { createRestartButton } from './helpers/restart'
 
 const columnas: number = 20
 const filas: number = 20
 const FPS: number = 500
 let terminado: boolean = false
 var sigue: boolean = true
-const parent = document.getElementById(
-  'app'
-) as HTMLDivElement
+const parent = document.getElementById('app') as HTMLDivElement
 
 // creamos un array 2D
 const createArray2D = (filas: number, columnas: number): any[] => {
@@ -57,8 +56,6 @@ const dibujarEscenario = (
   }
 }
 
-
-
 const astar = (ruta: Ruta) => {
   // seguimos hasta encontrar la solución
   if (!terminado && sigue) {
@@ -88,6 +85,7 @@ const astar = (ruta: Ruta) => {
         }
         console.log('Camino Encontrado!')
         logger(parent, 'Camino Encontrado!', true)
+        createRestartButton(parent)
         terminado = true
       }
       // si no, seguimos
@@ -130,6 +128,7 @@ const astar = (ruta: Ruta) => {
   } else {
     console.log('No hay camino posible')
     logger(parent, 'No hay camino posible', false)
+    createRestartButton(parent)
     terminado = true
   }
 }
@@ -165,8 +164,9 @@ export const setup = async (canvas: HTMLCanvasElement) => {
     terminado = true
     console.log('No hay camino posible')
     logger(parent, 'No hay camino posible', false)
+    createRestartButton(parent)
   }
-  
+
   //   ejecutamos el bucle principal
   while (!terminado) {
     borrarCanvas(canvas)
